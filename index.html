@@ -13,13 +13,13 @@
 
   <body ng-controller="ToDoListController as toDoCtrl">
     <form class="form-horizontal">
-      <input type="text" ng-model="toDoCtrl.taskInput">
-      <button class="btn" id='addTask' ng-click="toDoCtrl.addTask()">Add Task</button>
+      <input type="text" ng-model="string">
+      <button class="btn" id='addTask' ng-click="toDoCtrl.addTask(string)">Add Task</button>
     </form>
     <ul class="list-group">
-      <li class="list-group-item" ng-repeat ="task in toDoCtrl.tasks">
-        {{task}}
-        <button class="btn" id='completeTask' ng-click="toDoCtrl.completedTask()">Completed</button>
+      <li class="list-group-item" ng-repeat ="task in toDoCtrl.tasks" ng-hide="task.completed">
+        {{task.task}}
+        <button class="btn" id='completeTask' ng-click="toDoCtrl.completedTask(task)">Completed</button>
       </li>
     </ul>
   </body>
