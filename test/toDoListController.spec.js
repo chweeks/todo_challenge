@@ -41,4 +41,16 @@ describe('ToDoListController', function() {
       expect(ctrl.completeCount()).toBe(1);
     });
   });
+
+  describe('when clearing tasks', function(){
+
+    beforeEach(function() {
+      ctrl.tasks=[{task: 'string', completed:true}];
+    });
+
+    it('removes all completed tasks from array', function(){
+      ctrl.clearCompletedTasks();
+      expect(ctrl.tasks.length).toBe(0)
+    });
+  });
 });

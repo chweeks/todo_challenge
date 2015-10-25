@@ -29,7 +29,7 @@ toDoList.controller("ToDoListController", [function(){
   self.activeCount = function(){
     var active = 0;
     for(i = 0; i < self.tasks.length; i++){
-      if(self.tasks[0].completed == false){ active++ }
+      if(self.tasks[i].completed == false){ active++ }
     };
     return active;
   };
@@ -37,9 +37,17 @@ toDoList.controller("ToDoListController", [function(){
   self.completeCount = function(){
     var complete = 0;
     for(i = 0; i < self.tasks.length; i++){
-      if(self.tasks[0].completed){ complete++ }
+      if(self.tasks[i].completed){ complete++ }
     };
     return complete;
+  };
+
+  self.clearCompletedTasks = function(){
+    for(i = 0; i < self.tasks.length; i++){
+      if(self.tasks[i].completed){
+        self.tasks.splice(i,1);
+      }
+    };
   };
 
 }]);
