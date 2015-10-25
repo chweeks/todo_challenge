@@ -6,7 +6,7 @@ describe('To Do list maker', function() {
   var tasks = element.all(by.repeater('task in toDoCtrl.tasks'));
   var allTab = element(by.id('allTab'));
   var completeTab = element(by.id('completeTab'));
-  var incompleteTab = element(by.id('incompleteTab'));
+  var incompleteTab = element(by.id('active'));
 
   beforeEach(function() {
     browser.get('http://localhost:8080');
@@ -19,7 +19,7 @@ describe('To Do list maker', function() {
   it('lists tasks', function() {
     inputBox.sendKeys('Do Homework');
     addTaskButton.click();
-    expect(tasks.get(0).getText()).toEqual('Do Homework Completed');
+    expect(tasks.get(0).getText()).toEqual('Do Homework');
   });
 
   it('has a completed task button when tasks are added', function(){
@@ -41,5 +41,21 @@ describe('To Do list maker', function() {
     completeTaskButton.click();
     completeTab.click();
     expect((tasks).isDisplayed()).toBeTrue;
+  });
+
+  it('Complete button dissapears after being pressed', function(){
+    inputBox.sendKeys('Do Homework');
+    addTaskButton.click();
+    completeTaskButton.click();
+    expect((completeTaskButton).isDisplayed()).toBeFalse;
+  });
+
+  it('tabs show number of tasks', function(){
+    expect((allTab).getText()).toEqual('0')
+    inputBox.sendKeys('Do Homework');
+    addTaskButton.click();
+    expect((completeTab).getText()).toEqual('1')
+    completeTaskButton.click();
+    expect((incompleteTab).getText()).toEqual('0')
   });
 });

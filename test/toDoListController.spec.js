@@ -18,9 +18,27 @@ describe('ToDoListController', function() {
   describe('when inputting new task', function() {
 
     it('displays task', function() {
-      ctrl.taskInput = 'do homework';
-      ctrl.addTask();
-      expect(ctrl.tasks).toEqual(['do homework']);
+      ctrl.addTask('do homework');
+      expect(ctrl.tasks[0].task).toEqual('do homework');
+    });
+  });
+
+  describe('when calculating task number', function() {
+
+    beforeEach(function() {
+      ctrl.tasks=[{task: 'string', completed:true}];
+    });
+
+    it('counts all tasks', function() {
+      expect(ctrl.allCount()).toBe(1);
+    });
+
+    it('counts active tasks', function(){
+      expect(ctrl.activeCount()).toBe(0);
+    });
+
+    it('counts completed tasks', function(){
+      expect(ctrl.completeCount()).toBe(1);
     });
   });
 });
