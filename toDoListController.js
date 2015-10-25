@@ -3,7 +3,7 @@ toDoList.controller("ToDoListController", [function(){
   var self = this;
 
   self.tasks = [];
-  self.completedTasks = [];
+  self.tab = 1
 
   self.addTask = function(string){
     self.tasks.push({ task: string,
@@ -13,4 +13,13 @@ toDoList.controller("ToDoListController", [function(){
   self.completedTask = function(task){
     task.completed = true;
   };
+
+  self.setTab = function(tabNumber){
+    self.tab = tabNumber;
+  }
+
+  self.tabIsSet = function(tabNumber){
+    return self.tab == tabNumber;
+  };
+
 }]);

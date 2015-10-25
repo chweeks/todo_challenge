@@ -4,17 +4,19 @@ describe('To Do list maker', function() {
   var addTaskButton = element(by.id('addTask'));
   var completeTaskButton = element(by.id('completeTask'));
   var tasks = element.all(by.repeater('task in toDoCtrl.tasks'));
+  var allTab = element(by.id('allTab'));
+  var completeTab = element(by.id('completeTab'));
+  var incompleteTab = element(by.id('incompleteTab'));
 
   beforeEach(function() {
     browser.get('http://localhost:8080');
-  })
+  });
 
   it('has a title', function() {
     expect(browser.getTitle()).toEqual('To-Do List');
   });
 
   it('lists tasks', function() {
-
     inputBox.sendKeys('Do Homework');
     addTaskButton.click();
     expect(tasks.get(0).getText()).toEqual('Do Homework Completed');
@@ -31,5 +33,13 @@ describe('To Do list maker', function() {
     addTaskButton.click();
     completeTaskButton.click();
     expect((tasks).isDisplayed()).toBeFalse;
+  });
+
+  it('hides task when completed button is pressed', function(){
+    inputBox.sendKeys('Do Homework');
+    addTaskButton.click();
+    completeTaskButton.click();
+    completeTab.click();
+    expect((tasks).isDisplayed()).toBeTrue;
   });
 });
