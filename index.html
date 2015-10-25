@@ -31,7 +31,7 @@
     <div ng-show="toDoCtrl.tabIsSet(1)">
       <h4>All Tasks</h4>
       <ul class="list-group">
-        <li class="list-group-item" ng-repeat ="task in toDoCtrl.tasks" ng-hide="task.completed">
+        <li class="list-group-item" ng-repeat ="task in toDoCtrl.tasks">
           {{task.task}}
           <button class="btn" id='completeTask' ng-click="toDoCtrl.completedTask(task)">Completed</button>
         </li>
