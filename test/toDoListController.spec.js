@@ -21,6 +21,11 @@ describe('ToDoListController', function() {
       ctrl.addTask('do homework');
       expect(ctrl.tasks[0].task).toEqual('do homework');
     });
+
+    it('adds to array if task is greater than three characters', function(){
+      ctrl.addTask('boo');
+      expect(ctrl.tasks.length).toBe(0);
+    });
   });
 
   describe('when calculating task number', function() {

@@ -3,11 +3,13 @@ toDoList.controller("ToDoListController", [function(){
   var self = this;
 
   self.tasks = [];
-  self.tab = 1
+  self.tab = 1;
 
   self.addTask = function(string){
-    self.tasks.push({ task: string,
-                      completed: false });
+    if(string.length > 3){
+      self.tasks.push({ task: string,
+                        completed: false });
+      };
   };
 
   self.completedTask = function(task){
@@ -35,11 +37,11 @@ toDoList.controller("ToDoListController", [function(){
   };
 
   self.completeCount = function(){
-    var complete = 0;
+    var completed = 0;
     for(i = 0; i < self.tasks.length; i++){
-      if(self.tasks[i].completed){ complete++ }
+      if(self.tasks[i].completed){ completed++ }
     };
-    return complete;
+    return completed;
   };
 
   self.clearCompletedTasks = function(){

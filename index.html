@@ -3,64 +3,66 @@
   <head>
     <meta charset="utf-8">
     <title>To-Do List</title>
+    <link rel="stylesheet" href="public/css/app.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <link rel="stylesheet" src="app.css">
     <script src="js/app.js"></script>
     <script src="toDoListController.js"></script>
   </head>
 
   <body ng-controller="ToDoListController as toDoCtrl">
-    <h1>To-Do List</h1>
-    <ul class="nav nav-pills">
-      <li ng-class="{ active:toDoCtrl.tabIsSet(1) }" id='allTab'>
-        <a href ng-click="toDoCtrl.setTab(1)">All {{toDoCtrl.allCount()}}</a>
-      </li>
-      <li ng-class="{ active:toDoCtrl.tabIsSet(2) }" id='active'>
-        <a href ng-click="toDoCtrl.setTab(2)">Active {{toDoCtrl.activeCount()}}</a>
-      </li>
-      <li ng-class="{ active:toDoCtrl.tabIsSet(3) }" id='completeTab'>
-        <a href ng-click="toDoCtrl.setTab(3)">Completed {{toDoCtrl.completeCount()}}</a>
-      </li>
-    </ul>
-    <form class="form-horizontal">
-      <input type="text" ng-model="string">
-      <button class="btn" id='addTask' ng-click="toDoCtrl.addTask(string)">Add Task</button>
-    </form>
-    <div ng-show="toDoCtrl.tabIsSet(1)">
-      <h4>All Tasks</h4>
-      <ul class="list-group">
-        <li class="list-group-item" ng-repeat="task in toDoCtrl.tasks">
-          {{task.task}}
-          <button class="btn-success" id='completeTask' ng-click="toDoCtrl.completedTask(task)" ng-hide='task.completed'>
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          </button>
+    <div class="col-md-6 col-md-offset-2 ">
+      <h1>To-Do List</h1>
+      <ul class="nav nav-pills">
+        <li ng-class="{ active:toDoCtrl.tabIsSet(1) }" id='allTab'>
+          <a href ng-click="toDoCtrl.setTab(1)">All {{toDoCtrl.allCount()}}</a>
+        </li>
+        <li ng-class="{ active:toDoCtrl.tabIsSet(2) }" id='active'>
+          <a href ng-click="toDoCtrl.setTab(2)">Active {{toDoCtrl.activeCount()}}</a>
+        </li>
+        <li ng-class="{ active:toDoCtrl.tabIsSet(3) }" id='completeTab'>
+          <a href ng-click="toDoCtrl.setTab(3)">Completed {{toDoCtrl.completeCount()}}</a>
         </li>
       </ul>
+      <form class="form-horizontal">
+        <input type="text" ng-model="string">
+        <button class="btn-info" id='addTask' ng-click="toDoCtrl.addTask(string)">Add Task</button>
+      </form>
+      <div ng-show="toDoCtrl.tabIsSet(1)">
+        <h4>All Tasks</h4>
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="task in toDoCtrl.tasks">
+            {{task.task}}
+            <button class="btn-success" id='completeTask' style="float: right;" ng-click="toDoCtrl.completedTask(task)" ng-hide='task.completed'>
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div ng-show="toDoCtrl.tabIsSet(2)">
+        <h4>Active</h4>
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat ="task in toDoCtrl.tasks" ng-hide="task.completed">
+            {{task.task}}
+            <button class="btn-success" id='completeTask' ng-click="toDoCtrl.completedTask(task)">
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div ng-show="toDoCtrl.tabIsSet(3)">
+        <h4>Completed Tasks</h4>
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat ="task in toDoCtrl.tasks" ng-show="task.completed">
+            {{task.task}}
+          </li>
+        </ul>
+      </div>
+      <button class="btn-danger" id="clearTasks" ng-click='toDoCtrl.clearCompletedTasks()' ng-show="toDoCtrl.tasks.length > 0">
+        <span>Clear completed tasks</span>
+      </button>
     </div>
-    <div ng-show="toDoCtrl.tabIsSet(2)">
-      <h4>Active</h4>
-      <ul class="list-group">
-        <li class="list-group-item" ng-repeat ="task in toDoCtrl.tasks" ng-hide="task.completed">
-          {{task.task}}
-          <button class="btn-success" id='completeTask' ng-click="toDoCtrl.completedTask(task)">
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          </button>
-        </li>
-      </ul>
-    </div>
-    <div ng-show="toDoCtrl.tabIsSet(3)">
-      <h4>Completed Tasks</h4>
-      <ul class="list-group">
-        <li class="list-group-item" ng-repeat ="task in toDoCtrl.tasks" ng-show="task.completed">
-          {{task.task}}
-        </li>
-      </ul>
-    </div>
-    <button class="btn-danger" id="clearTasks" ng-click='toDoCtrl.clearCompletedTasks()' ng-show="toDoCtrl.tasks.length > 0">
-      <span>Clear completed tasks</span>
-    </button>
   </body>
 </html>
