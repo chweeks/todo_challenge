@@ -7,9 +7,13 @@ toDoList.controller("ToDoListController", [function(){
 
   self.addTask = function(string){
     if(string.length > 3){
-      self.tasks.push({ task: string,
-                        completed: false });
-      };
+      self.pushTask(string);
+    }
+  };
+
+  self.pushTask = function(string){
+    self.tasks.push({ task: string,
+                      completed: false })
   };
 
   self.completedTask = function(task){

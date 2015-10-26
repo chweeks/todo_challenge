@@ -1,4 +1,4 @@
-describe('To Do list maker', function() {
+describe('To Do list', function() {
 
   var inputBox = element(by.model('string'));
   var addTaskButton = element(by.id('addTask'));
@@ -9,51 +9,103 @@ describe('To Do list maker', function() {
   var incompleteTab = element(by.id('active'));
   var clearCompletedTasks = element(by.id('clearTasks'));
 
+  describe('when page loaded', function(){
 
-  beforeEach(function() {
-    browser.get('http://localhost:8080');
-    inputBox.sendKeys('Do Homework');
-    addTaskButton.click();
+    beforeEach(function() {
+      browser.get('http://localhost:8080');
+    });
+
+    it('displays a title', function() {
+      expect(browser.getTitle()).toEqual('To-Do List');
+    });
+
+    it('displays  text box', function(){
+      expect(inputBox.isDisplayed()).toBeTrue;
+    });
+
+    it('displays all tab', function(){
+      expect(allTab.isDisplayed()).toBeTrue;
+    });
+
+    it('displays active tab', function(){
+      expect(incompleteTab.isDisplayed()).toBeTrue;
+    });
+
+    it('displays all tab', function(){
+      expect(completeTab.isDisplayed()).toBeTrue;
+    });
+
+    it('tabs show number of tasks', function(){
+      expect((allTab).getText()).toEqual('All 0')
+      expect((incompleteTab).getText()).toEqual('Active 0')
+      expect((completeTab).getText()).toEqual('Completed 0')
+    });
+
+    it('clear completed task button is hidden', function(){
+      expect(clearCompletedTasks.isDisplayed()).toBeFalse;
+    });
   });
 
-  it('has a title', function() {
-    expect(browser.getTitle()).toEqual('To-Do List');
+  describe('when task is added', function(){
+
+    beforeEach(function() {
+      browser.get('http://localhost:8080');
+      inputBox.sendKeys('Do Homework');
+      addTaskButton.click();
+    });
+
+    it('lists tasks', function() {
+      expect(tasks.get(0).getText()).toEqual('Do Homework');
+    });
+
+    it('has a completed task button', function(){
+      expect((completeTaskButton).isDisplayed()).toBeTrue;
+    });
+
+    it('has a clear completed tasks button', function(){
+      expect((clearCompletedTasks).isDisplayed()).toBeFalse;
+    });
   });
 
-  it('lists tasks', function() {
-    expect(tasks.get(0).getText()).toEqual('Do Homework');
+  describe('when completed task button is pressed', function(){
+
+    beforeEach(function() {
+      browser.get('http://localhost:8080');
+      inputBox.sendKeys('Do Homework');
+      addTaskButton.click();
+      completeTaskButton.click();
+    });
+
+    it('Complete button dissapears', function(){
+      expect((completeTaskButton).isDisplayed()).toBeFalse;
+    });
+
+    it('hides task', function(){
+      expect((tasks).isDisplayed()).toBeFalse;
+    });
+
+    it('shows task in completed tab', function(){
+      completeTab.click();
+      expect((tasks).isDisplayed()).toBeTrue;
+    });
   });
 
-  it('has a completed task button when tasks are added', function(){
-    expect((completeTaskButton).isDisplayed()).toBeTruthy();
-  });
+  describe('when clear completed tasks button is pressed', function(){
 
-  it('hides task when completed button is pressed', function(){
-    completeTaskButton.click();
-    expect((tasks).isDisplayed()).toBeFalse;
-  });
+    beforeEach(function() {
+      browser.get('http://localhost:8080');
+      inputBox.sendKeys('Do Homework');
+      addTaskButton.click();
+      completeTaskButton.click();
+      clearCompletedTasks.click();
+    });
 
-  it('hides task when completed button is pressed', function(){
-    completeTaskButton.click();
-    completeTab.click();
-    expect((tasks).isDisplayed()).toBeTrue;
-  });
+    it('removes completed tasks', function(){
+      expect((completeTab).getText()).toEqual('Completed 0')
+    });
 
-  it('Complete button dissapears after being pressed', function(){
-    completeTaskButton.click();
-    expect((completeTaskButton).isDisplayed()).toBeFalse;
-  });
-
-  it('tabs show number of tasks', function(){
-    expect((allTab).getText()).toEqual('All 1')
-    expect((incompleteTab).getText()).toEqual('Active 1')
-    completeTaskButton.click();
-    expect((incompleteTab).getText()).toEqual('Active 0')
-  });
-
-  it('clear completed tasks button removes completed tasks', function(){
-    completeTaskButton.click();
-    clearCompletedTasks.click();
-    expect((completeTab).getText()).toEqual('Completed 0')
+    it('cleat task button is hidden', function(){
+      expect(clearCompletedTasks.isDisplayed()).toBeFalse;
+    });
   });
 });
